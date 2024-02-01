@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Core News</title>
+</head>
+<body>
+    <h1>{{ headline }}</h1>
+    
+    <form action="/news/" method="get">
+        <input type="date" name="date" required>
+        <input type="text" name="keyword" placeholder="Keyword">
+        <input type="text" name="category" placeholder="Category">
+        <button type="submit">Get News</button>
+    </form>
+    
+    <ul>
+        {% for article in articles %}
+        <li><a href="{{ article.webUrl }}">{{ article.webTitle }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
