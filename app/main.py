@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 import requests
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -12,8 +13,7 @@ from nltk.tokenize import word_tokenize
 load_dotenv()
 app = FastAPI()
 
-# app.mount("/", StaticFiles(directory="../client/build", html=True), name="client")
-
+app.mount("/static", StaticFiles(directory="../client/build/static", html=True), name="static")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -24,7 +24,8 @@ app.add_middleware(
 
 @app.get("/")
 async def read_root():
-    return {"message": "Welcome to Core News API"}
+    return FileResponse('../client/build/index.html')
+
 
 @app.get("/get-keyword/")
 async def get_keyword(date: str):
@@ -74,3 +75,10 @@ def extract_most_common_noun(text: str) -> str:
     keyword = most_common_nouns[0][0] if most_common_nouns else 'No keyword found'
     
     return keyword
+
+@app.get("/{path:path}")
+async def serve_file(path: str):
+    file_path = "../client/build/" + path
+    if not os.path.exists(file_path) or not os.path.isfile(file_path):
+        raise HTTPException(status_code=404)
+    return FileResponse(str(file_path))
