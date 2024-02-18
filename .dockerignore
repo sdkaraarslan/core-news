@@ -1,0 +1,32 @@
+# .dockerignore
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Pytest cache directory
+.pytest_cache
+
+# Ignore Jupyter Notebook files
+*.ipynb
+
+# Ignore files related to virtual environments
+venv
+*.venv
+*.venv/
+/client/node_modules
+
+# Ignore Git directory and files
+.git
+.gitignore
+
+# Ignore Docker files
+Dockerfile
+.dockerignore
+
+# Ignore log files
+*.log
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
